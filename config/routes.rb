@@ -8,8 +8,9 @@ Rails.application.routes.draw do
 
     collection do
       get :search
+      get :sign
     end
   end
 
-  root to: "static_pages#home"
+  root to: 'playlists#new'
 end

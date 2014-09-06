@@ -1,0 +1,43 @@
+%h1 Create Playlist
+
+= form_for @playlist do |f|
+
+  = f.label :title
+  = f.text_field :title, autofocus: true
+
+  = f.label :photo_url
+  = f.text_field :photo_url
+
+  = f.hidden_field :audio_url
+
+  = f.label :file
+  %input#files{ type: 'file', name: 'files[]' }
+
+  = f.submit
+
+:javascript
+  $(function() {
+    $('form').submit(function(e) {
+      e.preventDefault();
+
+      var that = this;
+      var file_name = $('#playlist_title').val()
+      var s3upload = s3upload != null ? s3upload : new S3Upload({
+        s3_object_name: file_name,
+        file_dom_selector: 'files',
+        s3_sign_put_url: '/playlists/sign',
+        onProgress: function(percent, message) {
+          console.log('Upload progress: ', percent, message);
+        },
+        onFinishS3Put: function(public_url) {
+          $('#playlist_audio_url').val(public_url);
+          that.submit();
+        },
+        onError: function(status) {
+          console.log('Upload error: ', status);
+        }
+      });
+
+      return false;
+    });
+  });

@@ -23,11 +23,13 @@ private
     @user ||= identity.user
     return @user if @user
 
+    # TODO: how best to set username, role?
     @user = User.where(email: identity.email).
       create_with(
-        name:      identity.name,
+        username:  identity.name,
         image_url: identity.image,
-        password:  Devise.friendly_token[0,20]
+        password:  Devise.friendly_token[0,20],
+        role:      :fan
       ).first_or_create!
   end
 

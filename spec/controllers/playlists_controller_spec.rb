@@ -41,6 +41,17 @@ describe PlaylistsController do
 
       expect( response.json.title ).to eq playlist.title
       expect( response.json.dj ).to eq playlist.user.username
+      expect( response.json.likes ).to eq 0
+    end
+
+    it 'lets a user like a playlist' do
+      playlist = create :playlist
+      post :like, playlist_id: playlist.id, format: :json
+
+      expect( response ).to redirect_to playlist_path(playlist)
+
+      get :show, id: playlist.id, format: :json
+      expect( response.json.likes ).to eq 1
     end
   end
 end

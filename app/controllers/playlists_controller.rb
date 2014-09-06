@@ -17,6 +17,13 @@ class PlaylistsController < ApplicationController
     authorize! :read, @playlist
   end
 
+  def like
+    @playlist = Playlist.find params[:playlist_id]
+    authorize! :like, @playlist
+    current_user.likes.where(playlist: @playlist).first_or_create!
+    redirect_to @playlist
+  end
+
 private
 
   def create_params

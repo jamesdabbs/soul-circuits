@@ -6,4 +6,7 @@ class User < ActiveRecord::Base
          :omniauthable
 
   has_many :identities
+
+  has_many :listens
+  has_many :likes
 end

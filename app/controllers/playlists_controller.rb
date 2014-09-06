@@ -12,6 +12,11 @@ class PlaylistsController < ApplicationController
     end
   end
 
+  def show
+    @playlist = Playlist.find params[:id]
+    authorize! :read, @playlist
+  end
+
 private
 
   def create_params

@@ -12,6 +12,8 @@ class User < ActiveRecord::Base
 
   has_many :playlists
 
+  validates_presence_of :username
+
   ROLES = %i( dj fan )
   validates :role, inclusion: { in: ROLES }
 

@@ -22,6 +22,10 @@ gem 'omniauth-twitter'
 gem 'hashie'
 gem 'figaro'
 
+gem 'bourbon'
+gem 'neat'
+gem 'bitters'
+
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller'

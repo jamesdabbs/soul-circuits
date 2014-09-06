@@ -35,6 +35,13 @@ GEM
       erubis (>= 2.6.6)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
+    bitters (0.10.0)
+      bourbon (>= 3.2)
+      sass (>= 3.2)
+      thor
+    bourbon (3.2.3)
+      sass (~> 3.2)
+      thor
     builder (3.2.2)
     cancancan (1.9.2)
     capybara (2.4.1)
@@ -102,6 +109,9 @@ GEM
     multi_json (1.10.1)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
+    neat (1.5.1)
+      bourbon (>= 3.1)
+      sass (~> 3.2.19)
     nokogiri (1.6.3.1)
       mini_portile (= 0.6.0)
     oauth (0.4.7)
@@ -224,6 +234,8 @@ PLATFORMS
 DEPENDENCIES
   better_errors
   binding_of_caller
+  bitters
+  bourbon
   cancancan
   capybara
   coffee-rails (~> 4.0.0)
@@ -235,6 +247,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   launchy
+  neat
   omniauth
   omniauth-facebook
   omniauth-twitter

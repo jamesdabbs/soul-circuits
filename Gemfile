@@ -15,6 +15,13 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'devise'
 gem 'cancancan'
 
+gem 'omniauth'
+gem 'omniauth-facebook'
+gem 'omniauth-twitter'
+
+gem 'hashie'
+gem 'figaro'
+
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller'

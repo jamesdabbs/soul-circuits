@@ -4,7 +4,7 @@ FactoryGirl.define do
     email { "#{username}@example.com" }
     password "awfulPass"
     password_confirmation "awfulPass"
-    role :fan
+    role "dj"
   end
 
   factory :dj, class: "User" do
@@ -12,7 +12,7 @@ FactoryGirl.define do
     email { "#{username}@example.com" }
     password "password"
     password_confirmation "password"
-    role :dj
+    role "dj"
   end
 
   factory :fan, class: "User" do
@@ -20,6 +20,6 @@ FactoryGirl.define do
     email { "#{username}@example.com" }
     password "password"
     password_confirmation "password"
-    role :fan
+    role "fan"
   end
 end

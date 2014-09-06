@@ -5,37 +5,59 @@
   = f.label :title
   = f.text_field :title, autofocus: true
 
-  = f.label :photo_url
-  = f.text_field :photo_url
+  %input#photo{ type: 'file', name: 'photo[]' }
+  %img#photo-preview
+  = f.hidden_field :photo_url
 
+  %input#audio{ type: 'file', name: 'files[]' }
   = f.hidden_field :audio_url
-
-  = f.label :file
-  %input#files{ type: 'file', name: 'files[]' }
 
   = f.submit
 
 :javascript
   $(function() {
+    $('#photo').on('drop', function(e) {
+      var fr = new FileReader();
+      fr.onload = function(e) {
+        $('#photo-preview').attr('src', e.target.result);
+      };
+      fr.readAsDataURL(e.originalEvent.dataTransfer.files[0]);
+    });
+
+    //document.getElementById("uploadPreview").src = oFREvent.target.result;
+    var finalize = function(form) {
+      if ( !$('#playlist_photo_url').val() || !$('#playlist_audio_url').val() ) return;
+      form.submit();
+    };
+
     $('form').submit(function(e) {
       e.preventDefault();
 
       var that = this;
       var file_name = $('#playlist_title').val()
-      var s3upload = s3upload != null ? s3upload : new S3Upload({
+
+      // Upload the audio
+      var audio_upload = audio_upload != null ? audio_upload : new S3Upload({
         s3_object_name: file_name,
-        file_dom_selector: 'files',
+        file_dom_selector: 'audio',
         s3_sign_put_url: '/playlists/sign',
-        onProgress: function(percent, message) {
-          console.log('Upload progress: ', percent, message);
-        },
         onFinishS3Put: function(public_url) {
           $('#playlist_audio_url').val(public_url);
-          that.submit();
+          finalize(that);
         },
-        onError: function(status) {
-          console.log('Upload error: ', status);
-        }
+        onError: function(status) { alert('Upload error: ', status); }
+      });
+
+      // Upload the cover photo
+      var photo_upload = photo_upload != null ? photo_upload : new S3Upload({
+        s3_object_name: file_name + '-cover',
+        file_dom_selector: 'photo',
+        s3_sign_put_url: '/playlists/sign',
+        onFinishS3Put: function(public_url) {
+          $('#playlist_photo_url').val(public_url);
+          finalize(that);
+        },
+        onError: function(status) { alert('Upload error: ', status); }
       });
 
       return false;

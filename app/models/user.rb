@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
 
   validates_presence_of :username
 
-  ROLES = %i( dj fan )
+  ROLES = %w( dj fan )
   validates :role, inclusion: { in: ROLES }
 
   def dj?

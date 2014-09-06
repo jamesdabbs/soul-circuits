@@ -9,4 +9,13 @@ class User < ActiveRecord::Base
 
   has_many :listens
   has_many :likes
+
+  has_many :playlists
+
+  ROLES = %i( dj fan )
+  validates :role, inclusion: { in: ROLES }
+
+  def dj?
+    role.to_s == "dj"
+  end
 end

@@ -26,6 +26,16 @@ class PlaylistsController < ApplicationController
     end
   end
 
+  def update
+    @playlist = current_user.playlists.find params[:id]
+    authorize! :update, @playlist
+    if @playlist.update update_params
+      redirect_to @playlist
+    else
+      render :show
+    end
+  end
+
   def show
     @playlist = Playlist.find params[:id]
     authorize! :read, @playlist
@@ -57,5 +67,9 @@ private
 
   def create_params
     params.require(:playlist).permit(:title, :audio_url, :photo_url)
+  end
+
+  def update_params
+    params.require(:playlist).permit(:title)
   end
 end

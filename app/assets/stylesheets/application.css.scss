@@ -24,19 +24,22 @@ div.container {
 @import 'hero';
 @import 'progress';
 @import 'cards';
+@import 'breadcrumbs';
 
 body {
   background: url(http://subtlepatterns.com/patterns/navy_blue.png);
   padding-top: 2em;
+  padding-bottom: 60px;
 }
 
 .user-bar {
   img {
-    position: absolute;
+    position: fixed;
     bottom: 10px;
     right: 10px;
     height: 60px;
     border-radius: 30px;
+    z-index: 10;
   }
 }
 
@@ -56,4 +59,18 @@ audio {
     display: block;
     opacity: 0;
   }
+}
+
+.sidebar {
+  @include span-columns(3);
+
+  img {
+    width: 100%;
+    border-radius: 2px;
+  }
+}
+
+.content {
+  @include span-columns(9);
+  @include omega();
 }

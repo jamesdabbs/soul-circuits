@@ -6,6 +6,7 @@ class Ability
 
     if user.dj?
       can :create, Playlist
+      can :update, Playlist, user_id: user.id
     else
       can :like, Playlist
     end

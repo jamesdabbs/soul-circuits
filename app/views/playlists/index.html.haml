@@ -24,9 +24,10 @@
               .ribbon $#{playlist.payout}
 
           .card-image
-            %img{:alt => playlist.title, :src => playlist.photo_url}
+            = link_to playlist do
+              %img{:alt => playlist.title, :src => playlist.photo_url}
           .card-stats
-            .title= playlist.title
+            = link_to playlist.title, playlist, class: 'title'
             %ul
               %li
                 = playlist.play_count

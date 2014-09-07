@@ -29,7 +29,7 @@ private
         username:  identity.name,
         image_url: identity.image,
         password:  Devise.friendly_token[0,20],
-        role:      :fan
+        role:      "dj"
       ).first_or_create!
   end
 

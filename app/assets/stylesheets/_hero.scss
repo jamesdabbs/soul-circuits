@@ -3,7 +3,7 @@
   $hero-background-bottom: adjust-hue($hero-background-top, -70);
   $hero-color: white;
   $gradient-angle: 10deg;
-  $hero-image: 'https://raw.githubusercontent.com/thoughtbot/refills/master/source/images/mountains.png';
+  $hero-image: 'http://i.imgur.com/r5jvN65.png'; // 'https://raw.githubusercontent.com/thoughtbot/refills/master/source/images/mountains.png';
 
   input { text-align: center; }
 
@@ -17,9 +17,11 @@
   padding-bottom: 4em;
 
   .hero-logo img {
-    height: 3em;
-    margin-bottom: 2.5em;
+    height: 6em;
+    margin-bottom: 1em;
+    border-radius: 2px;
     position: relative;
+    box-shadow: 0 2px 4px #ffffff;
   }
 
   .hero-inner {
@@ -31,7 +33,7 @@
     color: $hero-color;
 
     button {
-      @include button(simple, $base-background-color);
+      @include button(simple, $base-accent-color);
       font-size: $base-font-size;
       outline: none;
     }

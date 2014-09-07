@@ -1,28 +1,41 @@
-%h1 Create Playlist
-
 = form_for @playlist do |f|
+  .hero
+    .hero-inner
+      .hero-logo
+        %input#photo{ type: 'file', name: 'photo[]' }
+        %img{:alt => "", :src => "https://raw.githubusercontent.com/thoughtbot/refills/master/source/images/placeholder_logo_1.png\r\n"}/
+      .hero-copy
 
-  = f.label :title
-  = f.text_field :title, autofocus: true
+      = f.text_field :title, placeholder: 'Name Playlist'
 
-  %input#photo{ type: 'file', name: 'photo[]' }
-  %img#photo-preview
+      .progress-bar
+        %span.prompt Drag track here
+        %input#audio{ type: 'file', name: 'files[]' }
+        %span.meter{ style: 'width:60%' }
+
+      = f.submit 'Broadcast'
+
   = f.hidden_field :photo_url
-
-  %input#audio{ type: 'file', name: 'files[]' }
   = f.hidden_field :audio_url
-
-  = f.submit
 
 :javascript
   $(function() {
     $('#photo').on('drop', function(e) {
       var fr = new FileReader();
       fr.onload = function(e) {
-        $('#photo-preview').attr('src', e.target.result);
+        $('.hero').
+          css('background', 'url(' + e.target.result + ')').
+          css('background-size', 'cover');
       };
       fr.readAsDataURL(e.originalEvent.dataTransfer.files[0]);
     });
+
+    $('#audio').on('drop', function(e) {
+      $('.progress-bar .prompt').html('Ready');
+    });
+
+    var progress_meter = $('.meter');
+    //progress_meter.hide();
 
     //document.getElementById("uploadPreview").src = oFREvent.target.result;
     var finalize = function(form) {
@@ -34,7 +47,9 @@
       e.preventDefault();
 
       var that = this;
-      var file_name = $('#playlist_title').val()
+      var file_name = $('#playlist_title').val();
+
+      progress_meter.show();
 
       // Upload the audio
       var audio_upload = audio_upload != null ? audio_upload : new S3Upload({
@@ -45,7 +60,10 @@
           $('#playlist_audio_url').val(public_url);
           finalize(that);
         },
-        onError: function(status) { alert('Upload error: ', status); }
+        onError: function(status) { alert('Upload error: ', status); },
+        onProgress: function(percent, status) {
+          progress_meter.css('width', percent);
+        }
       });
 
       // Upload the cover photo

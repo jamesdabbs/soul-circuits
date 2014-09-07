@@ -27,7 +27,7 @@ private
     @user = User.where(email: identity.email).
       create_with(
         username:  identity.name,
-        image_url: identity.image,
+        photo_url: identity.image,
         password:  Devise.friendly_token[0,20],
         role:      "dj"
       ).first_or_create!

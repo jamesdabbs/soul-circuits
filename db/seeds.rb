@@ -14,7 +14,7 @@ u = User.create!(
   photo_url: "https://scontent-a-atl.xx.fbcdn.net/hphotos-xaf1/t31.0-8/p960x960/10286947_10103334186225920_3671247430917487754_o.jpg"
 )
 
-u.playlists.create!([{"id"=>1,
+u.playlists.create!([{
   "title"=>"Feed the Animals",
   "audio_url"=>
    "http://s3.amazonaws.com/soul-circuits/DJ-JD-Feed-the-Animals-1410065747",
@@ -24,7 +24,7 @@ u.playlists.create!([{"id"=>1,
   "share_count"=>975,
   "play_count"=>4455,
   "payout"=>783},
- {"id"=>2,
+ {
   "title"=>"Night Ripper",
   "audio_url"=>"http://s3.amazonaws.com/soul-circuits/DJ-JD-Night-Ripper-1410065813",
   "photo_url"=>
@@ -33,7 +33,7 @@ u.playlists.create!([{"id"=>1,
   "share_count"=>412,
   "play_count"=>1501,
   "payout"=>nil},
- {"id"=>3,
+ {
   "title"=>"Anatidaephobia",
   "audio_url"=>"http://s3.amazonaws.com/soul-circuits/DJ-JD-Anatidaephobia-1410065881",
   "photo_url"=>

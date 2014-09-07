@@ -66,6 +66,7 @@ ActiveRecord::Schema.define(version: 20140907024750) do
     t.datetime "updated_at"
     t.string   "username"
     t.string   "role",                   default: "fan"
+    t.string   "photo_url"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

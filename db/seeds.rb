@@ -6,7 +6,13 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-u = User.create!(username: "DJ JD", email: "jamesdabbs@gmail.com", role: "dj", password: "password")
+u = User.create!(
+  username: "DJ JD",
+  email: "jamesdabbs@gmail.com",
+  role: "dj",
+  password: "password",
+  photo_url: "https://scontent-a-atl.xx.fbcdn.net/hphotos-xaf1/t31.0-8/p960x960/10286947_10103334186225920_3671247430917487754_o.jpg"
+)
 
 u.playlists.create!([{"id"=>1,
   "title"=>"Feed the Animals",

@@ -27,6 +27,17 @@ div.container {
 
 body {
   background: url(http://subtlepatterns.com/patterns/navy_blue.png);
+  padding-top: 2em;
+}
+
+.user-bar {
+  img {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    height: 60px;
+    border-radius: 30px;
+  }
 }
 
 audio {

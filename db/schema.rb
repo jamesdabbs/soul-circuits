@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140906160838) do
+ActiveRecord::Schema.define(version: 20140907024750) do
 
   create_table "identities", force: true do |t|
     t.integer  "user_id"
@@ -45,6 +45,10 @@ ActiveRecord::Schema.define(version: 20140906160838) do
     t.string   "photo_url"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "like_count",  default: 0, null: false
+    t.integer  "share_count", default: 0, null: false
+    t.integer  "play_count",  default: 0, null: false
+    t.integer  "payout"
   end
 
   create_table "users", force: true do |t|

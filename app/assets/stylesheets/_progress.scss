@@ -31,6 +31,12 @@
   padding: 2px;
   width: 100%;
 
+  .prompt {
+    text-align: center;
+    font-weight: 500;
+    color: $progress-border-color;
+  }
+
   > span.meter {
     @include animation(progress $progress-animation-duration linear infinite);
     @include box-sizing(border-box);

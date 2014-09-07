@@ -23,11 +23,22 @@ div.container {
 
 @import 'hero';
 @import 'progress';
+@import 'cards';
 
-.hero {
-  position: relative;
+body {
+  background: url(http://subtlepatterns.com/patterns/navy_blue.png);
+}
 
-  #photo {
+audio {
+  width: 100%;
+}
+
+#new-card {
+  .card-image {
+    position: relative;
+  }
+
+  #photo-input {
     position: absolute;
     width: 100%;
     height: 100%;

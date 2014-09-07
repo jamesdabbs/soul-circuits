@@ -1,0 +1,99 @@
+- @playlists.each_slice(3) do |playlists|
+  .cards
+    - playlists.each do |playlist|
+      - if playlist.new_record?
+        .card#new-card
+          .card-image
+            %input#photo-input{ type: 'file', name: 'photo[]' }
+            %img{:src => 'http://s3.amazonaws.com/soul-circuits/James-Dabbs-Woodlawn-cover-1410053603'}
+          .card-stats
+            = form_for playlist do |f|
+              = f.text_field :title, placeholder: 'New Playlist', class: 'title'
+              = f.hidden_field :audio_url
+              = f.hidden_field :photo_url
+
+            .progress-bar
+              %span.prompt Drag to Broadcast
+              %input#audio-input{ type: 'file', name: 'files[]' }
+              %span.meter{ style: 'display:none; width:0%' }
+
+      - else
+        .card
+          - if playlist.payout
+            .ribbon-wrapper
+              .ribbon $#{playlist.payout}
+
+          .card-image
+            %img{:alt => playlist.title, :src => playlist.photo_url}
+          .card-stats
+            .title= playlist.title
+            %ul
+              %li
+                = playlist.play_count
+                %i.fa.fa-headphones
+              %li
+                = playlist.like_count
+                %i.fa.fa-heart
+              %li
+                = playlist.share_count
+                %i.fa.fa-share-alt
+          %audio{ controls: 'controls' }
+            %source{ src: playlist.audio_url, type: 'audio/mp3' }
+
+:javascript
+  $(function() {
+    $('#photo-input').on('drop', function(e) {
+      var fr = new FileReader();
+      fr.onload = function(e) {
+        $('#new-card .card-image').
+          css('background', 'url(' + e.target.result + ')').
+          css('background-size', 'cover');
+        $('#new-card img').css('opacity', 0);
+      };
+      fr.readAsDataURL(e.originalEvent.dataTransfer.files[0]);
+    });
+
+    $('#audio-input').on('drop', function(e) {
+      $('.progress-bar .prompt').hide();
+
+      var audio_url, photo_url,
+          file_name = $('#playlist_title').val(),
+          progress_meter = $('.meter').show();
+
+      var finalize = function() {
+        if (!audio_url || !photo_url) return;
+
+        $('#playlist_audio_url').val(audio_url);
+        $('#playlist_photo_url').val(photo_url);
+        $('#new-card form').submit();
+      };
+
+      // Need to wait until audio is available to input
+      setTimeout(function() {
+        var audio_upload = audio_upload != null ? audio_upload : new S3Upload({
+          s3_object_name: file_name,
+          file_dom_selector: 'audio-input',
+          s3_sign_put_url: '/playlists/sign',
+          onFinishS3Put: function(public_url) {
+            audio_url = public_url;
+            finalize();
+          },
+          onError: function(status) { alert('Upload error: ', status); },
+          onProgress: function(percent, status) {
+            progress_meter.css('width', percent + '%');
+          }
+        });
+      }, 200);
+
+      var photo_upload = photo_upload != null ? photo_upload : new S3Upload({
+        s3_object_name: file_name + '-cover',
+        file_dom_selector: 'photo-input',
+        s3_sign_put_url: '/playlists/sign',
+        onFinishS3Put: function(public_url) {
+          photo_url = public_url;
+          finalize();
+        },
+        onError: function(status) { alert('Upload error: ', status); }
+      });
+    });
+  });

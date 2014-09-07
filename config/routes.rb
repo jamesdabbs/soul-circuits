@@ -12,5 +12,5 @@ Rails.application.routes.draw do
     end
   end
 
-  root to: 'playlists#new'
+  root to: 'playlists#index'
 end

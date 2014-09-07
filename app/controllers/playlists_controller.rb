@@ -2,6 +2,12 @@ class PlaylistsController < ApplicationController
   before_action :authenticate_user!, except: [:show]
   skip_authorization_check only: [:sign]
 
+  def index
+    authorize! :read, Playlist
+    @playlists = [current_user.playlists.new] + \
+      current_user.playlists.order("created_at desc").to_a
+  end
+
   def new
     @playlist = current_user.playlists.new
     authorize! :create, @playlist
@@ -11,7 +17,7 @@ class PlaylistsController < ApplicationController
     @playlist = current_user.playlists.new create_params
     authorize! :create, @playlist
     if @playlist.save
-      redirect_to @playlist
+      redirect_to playlists_path
     else
       respond_to do |format|
         format.html { render :new }
